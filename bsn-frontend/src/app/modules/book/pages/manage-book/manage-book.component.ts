@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {BookRequest} from "../../../../services/models/book-request";
-import {BookService} from "../../../../services/services/book.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {BookServiceRefactored} from "../../../../services/services/book.service.refactored";
 
 @Component({
   selector: 'app-manage-book',
@@ -16,31 +16,34 @@ export class ManageBookComponent implements OnInit {
   bookRequest: BookRequest = {author: "", isbn: "", synopsis: "", title: ""};
 
   constructor(
-    private bookService: BookService,
+    //private bookService: BookService,
+    private bookService: BookServiceRefactored,
     private router: Router,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit() {
-    const bookId = this.activatedRoute.snapshot.params['bookId'];
+    const bookId = Number(this.activatedRoute.snapshot.paramMap.get('bookId'));
     if (bookId) {
-      this.bookService.findBookById({
-        'book-id': bookId
-      }).subscribe({
-        next: (book) => {
-          // Create book with information
+      this.bookService.getBookById(bookId).subscribe({
+        next: (bookResponse) => {
           this.bookRequest = {
-            id: book.id,
-            title: book.title as string,
-            author: book.author as string,
-            isbn: book.isbn as string,
-            synopsis: book.synopsis as string,
-            shareable: book.shareable
+            id: bookResponse.id as number,
+            title: bookResponse.title as string,
+            author: bookResponse.author as string,
+            isbn: bookResponse.isbn as string,
+            synopsis: bookResponse.synopsis as string,
+            shareable: bookResponse.shareable
           }
 
-          if (book.cover) {
-            this.selectedPicture = 'data:image/jpg;base64,' + book.cover;
+          if (bookResponse.cover) {
+            this.selectedPicture = 'data:image/jpg;base64,' + bookResponse.cover;
           }
+        },
+        error: (error) => {
+          console.error('Failed to load book:', error);
+          this.errorMsg = error.error?.businessValidationErrors || ['Failed to load book data'];
         }
       })
     }
@@ -58,18 +61,11 @@ export class ManageBookComponent implements OnInit {
   }
 
   onSaveBook() {
-    this.bookService.createBook({
-      body: this.bookRequest
-    }).subscribe({
+    this.bookService.createBook(this.bookRequest).subscribe({
       // book id returned by the backend
       next: (bookId) => {
         if (this.selectedBookCover) {
-          this.bookService.uploadCoverPicture({
-            bookId: bookId,
-            body: {
-              file: this.selectedBookCover
-            }
-          }).subscribe({
+          this.bookService.uploadCoverPicture(bookId as number, this.selectedBookCover).subscribe({
             next: () => {
               this.router.navigate(['/books/my-books']);
             },
@@ -78,8 +74,6 @@ export class ManageBookComponent implements OnInit {
               this.errorMsg = error.error?.businessValidationErrors || ['Failed to upload cover picture'];
             }
           })
-        } else {
-          this.router.navigateByUrl('/books/my-books');
         }
       },
       error: (error) => {

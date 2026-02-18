@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {PageResponseBorredBookResponse} from "../../../../services/models/page-response-borred-book-response";
 import {BookService} from "../../../../services/services/book.service";
-import {BorredBookResponse} from "../../../../services/models/borred-book-response";
+import {BorrowedBookResponse} from "../../../../services/models/borrowed-book-response";
+import {PaginationResponse} from "../../../../services/models/api-response";
+import {BookServiceRefactored} from "../../../../services/services/book.service.refactored";
 
 @Component({
   selector: 'app-returned-books',
@@ -9,13 +11,16 @@ import {BorredBookResponse} from "../../../../services/models/borred-book-respon
   styleUrls: ['./returned-books.component.scss']
 })
 export class ReturnedBooksComponent implements OnInit {
-  returnedBooks: PageResponseBorredBookResponse = {};
+  returnedBooks: PaginationResponse<BorrowedBookResponse> = {};
   page: number = 0;
   size: number = 5;
   message: string = "";
   level: string = "success";
 
-  constructor(private bookService: BookService) {
+  constructor(
+    // private bookService: BookService,
+    private bookService: BookServiceRefactored,
+  ) {
   }
 
   ngOnInit() {
@@ -23,23 +28,21 @@ export class ReturnedBooksComponent implements OnInit {
   }
 
   findAllReturnedBooks() {
-    this.bookService.findAllReturnedBooks({page: this.page, size: this.size}).subscribe({
-      next: (returnedBooks: PageResponseBorredBookResponse) => {
+    this.bookService.getReturnedBooks({page: this.page, size: this.size}).subscribe({
+      next: (returnedBooks) => {
         this.returnedBooks = returnedBooks;
       }
     })
   }
 
-  onApproveReturnedBook(book: BorredBookResponse) {
+  onApproveReturnedBook(book: BorrowedBookResponse) {
     if (!book.returned) {
       this.level = "error";
       this.message = "The book is not yet returned.";
       return;
     }
 
-    this.bookService.approveReturnBorrowBook({
-      "book-id": book.id as number
-    }).subscribe({
+    this.bookService.approveReturnedBook(book.id as number).subscribe({
       next: () => {
         this.level = "success";
         this.message = "Returned book approved !";

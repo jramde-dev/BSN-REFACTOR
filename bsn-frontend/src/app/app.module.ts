@@ -9,7 +9,7 @@ import {FormsModule} from "@angular/forms";
 import { RegisterComponent } from './auth-pages/register/register.component';
 import { ActivateAccountComponent } from './auth-pages/activate-account/activate-account.component';
 import {CodeInputModule} from "angular-code-input";
-import {HttpTokenInterceptor} from "./services/interceptor/http-token.interceptor";
+import {HttpTokenInterceptor} from "./core/interceptor/http-token.interceptor";
 
 @NgModule({
   declarations: [

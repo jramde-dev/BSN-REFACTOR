@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {PageResponseBookResponse} from "../../../../services/models/page-response-book-response";
-import {BookService} from "../../../../services/services/book.service";
 import {Router} from "@angular/router";
 import {BookResponse} from "../../../../services/models/book-response";
+import {PaginationResponse} from "../../../../services/models/api-response";
+import {BookServiceRefactored} from "../../../../services/services/book.service.refactored";
 
 @Component({
   selector: 'app-my-books',
@@ -10,11 +10,14 @@ import {BookResponse} from "../../../../services/models/book-response";
   styleUrls: ['./my-books.component.scss']
 })
 export class MyBooksComponent implements OnInit {
-  bookResponse: PageResponseBookResponse = {};
+  bookResponse: PaginationResponse<BookResponse> = {};
   page: number = 0;
   size: number = 5;
 
-  constructor(private bookService: BookService, private router: Router) {
+  constructor(
+    // private bookService: BookService,
+    private bookService: BookServiceRefactored,
+    private router: Router) {
   }
 
   ngOnInit(): void {
@@ -25,8 +28,8 @@ export class MyBooksComponent implements OnInit {
    * Retrieve all the books available in the database.
    */
   findAllBooksByOwner() {
-    this.bookService.findAllBooksByOwner({page: this.page, size: this.size}).subscribe({
-      next: (books: PageResponseBookResponse) => {
+    this.bookService.getBooksByOwner({page: this.page, size: this.size}).subscribe({
+      next: (books) => {
         this.bookResponse = books;
       }
     })
@@ -66,9 +69,7 @@ export class MyBooksComponent implements OnInit {
    * @param book : book to archive
    */
   archiveBook(book: BookResponse) {
-    this.bookService.changeArchiveStatus({
-      'book-id': book.id as number
-    }).subscribe({
+    this.bookService.changeArchiveStatus(book.id as number).subscribe({
       next: () => {
         book.archived = !book.archived;
       }
@@ -80,9 +81,7 @@ export class MyBooksComponent implements OnInit {
    * @param book : book to share
    */
   shareBook(book: BookResponse) {
-    this.bookService.changeShareableStatus({
-      'book-id': book.id as number
-    }).subscribe({
+    this.bookService.changeShareableStatus(book.id as number).subscribe({
       next: () => {
         book.shareable = !book.shareable;
       }
@@ -90,6 +89,6 @@ export class MyBooksComponent implements OnInit {
   }
 
   editBook(book: BookResponse) {
-    this.router.navigate(['books', 'manage', book.id]);
+    this.router.navigate(['/books', 'manage', book.id]);
   }
 }

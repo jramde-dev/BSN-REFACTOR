@@ -14,41 +14,42 @@
     <div class="col-9">
       <div class="card">
         <div class="card-body">
-          <form class="row g-3">
-            <div class="col-12">
-              <label for="title" class="form-label">Title</label>
-              <input type="text" id="title" name="title" placeholder="Book title" class="form-control"
-                     [(ngModel)]="bookRequest.title">
-            </div>
-            <div class="col-6">
-              <label for="author" class="form-label">Author name</label>
-              <input type="text" id="author" name="author" placeholder="Author name" class="form-control"
-                     [(ngModel)]="bookRequest.author">
-            </div>
-            <div class="col-6">
-              <label for="isbn" class="form-label">ISBN</label>
-              <input type="text" id="isbn" name="isbn" placeholder="Book ISBN" class="form-control" [(ngModel)]="bookRequest.isbn">
-            </div>
-            <div class="col-12">
-              <label for="synopsis" class="form-label">Synopsis</label>
-              <textarea type="text" id="synopsis" name="synopsis" rows="4" placeholder="Book synopsis" class="form-control"
-                        [(ngModel)]="bookRequest.synopsis"></textarea>
-            </div>
-            <div class="col-12">
-              <input type="checkbox" id="shareme" name="shareable" [(ngModel)]="bookRequest.shareable" class="form-check-input">
-              <label for="shareme" class="form-check-label ms-2">Share it</label>
-            </div>
+          <div class="col-12">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" id="title" name="title" placeholder="Book title" class="form-control"
+                   [(ngModel)]="bookRequest.title">
+          </div>
+          <div class="col-6">
+            <label for="author" class="form-label">Author name</label>
+            <input type="text" id="author" name="author" placeholder="Author name" class="form-control"
+                   [(ngModel)]="bookRequest.author">
+          </div>
+          <div class="col-6">
+            <label for="isbn" class="form-label">ISBN</label>
+            <input type="text" id="isbn" name="isbn" placeholder="Book ISBN" class="form-control"
+                   [(ngModel)]="bookRequest.isbn">
+          </div>
+          <div class="col-12">
+            <label for="synopsis" class="form-label">Synopsis</label>
+            <textarea type="text" id="synopsis" name="synopsis" rows="4" placeholder="Book synopsis"
+                      class="form-control"
+                      [(ngModel)]="bookRequest.synopsis"></textarea>
+          </div>
+          <div class="col-12">
+            <input type="checkbox" id="shareme" name="shareable" [(ngModel)]="bookRequest.shareable"
+                   class="form-check-input">
+            <label for="shareme" class="form-check-label ms-2">Share it</label>
+          </div>
 
-            <!-- Actions button -->
-            <div class="d-flex justify-content-end gap-2 col-12">
-              <button (click)="onSaveBook()" type="submit" class="btn btn-outline-primary">
-                <i class="fas fa-save"></i>&nbsp;Save
-              </button>
-              <button routerLink="/books/my-books" class="btn btn-outline-danger">
-                <i class="fas fa-times"></i>&nbsp;Cancel
-              </button>
-            </div>
-          </form>
+          <!-- Actions button -->
+          <div class="d-flex justify-content-end gap-2 col-12">
+            <button (click)="onSaveBook()" type="submit" class="btn btn-outline-primary">
+              <i class="fas fa-save"></i>&nbsp;Save
+            </button>
+            <button routerLink="/books/my-books" class="btn btn-outline-danger">
+              <i class="fas fa-times"></i>&nbsp;Cancel
+            </button>
+          </div>
         </div>
       </div>
     </div>
