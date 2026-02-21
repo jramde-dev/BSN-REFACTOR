@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -10,6 +10,11 @@ import { RegisterComponent } from './auth-pages/register/register.component';
 import { ActivateAccountComponent } from './auth-pages/activate-account/activate-account.component';
 import {CodeInputModule} from "angular-code-input";
 import {HttpTokenInterceptor} from "./core/interceptor/http-token.interceptor";
+import {KeycloakService} from "./services/keycloak/keycloak.service";
+
+// export function kcFactory(keycloak: KeycloakService) {
+//   return () => keycloak.init();
+// }
 
 @NgModule({
   declarations: [
@@ -31,6 +36,12 @@ import {HttpTokenInterceptor} from "./core/interceptor/http-token.interceptor";
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpTokenInterceptor,
+      multi: true
+    },
+    {
+      provide: APP_INITIALIZER,
+      deps: [KeycloakService],
+      useFactory: (keycloak: KeycloakService) => () => keycloak.init(),
       multi: true
     }
   ],
