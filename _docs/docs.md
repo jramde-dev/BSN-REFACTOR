@@ -57,3 +57,7 @@ public class GlobalExceptionHandler {
 
 ### Angular : Guard, decode the token with @auth0/angular-jwt
 $ npm install @auth0/angular-jwt
+
+## Keycloak
+### 1. Create a realm
+### 2. Create a client

@@ -1,33 +1,40 @@
 services:
   postgres:
-    container_name: postgres-bsn
+    container_name: bsn-postgres
     image: postgres:17  # Spécifiez une version
     environment:
       POSTGRES_USER: username
       POSTGRES_PASSWORD: password
       POSTGRES_DB: bsndb
-      # PGDATA retiré - utilise le défaut
     volumes:
       - postgres:/var/lib/postgresql/data  # Corrigé
     ports:
       - "5438:5432"
     networks:
       - spring-demo
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U username -d bsndb"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   mail-dev:
-    container_name: mail-dev-bsn
+    container_name: bsn-mail-dev
     image: maildev/maildev
     ports:
       - "1080:1080"
       - "1025:1025"
     networks:
       - spring-demo
+
+  # Keycloak config
+  keycloak:
+    container_name: bsn-keycloak
+    image: quay.io/keycloak/keycloak:24.0.2
+    ports:
+      - "9090:8080"
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    networks:
+      - spring-demo
+    command:
+      - "start-dev"
 
 networks:
   spring-demo:
