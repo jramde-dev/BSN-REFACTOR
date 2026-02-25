@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/auth")
+// @RestController
+// @RequestMapping("/auth")
 @RequiredArgsConstructor
 // From swagger
 @Tag(name = "Authentication", description = "Authentication endpoints")

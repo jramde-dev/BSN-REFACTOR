@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 /**
  * This class is designed to load the user from the database.
  */
-@Service
+// @Service
 @RequiredArgsConstructor
 public class JrUserDetailsServiceImpl implements UserDetailsService {
     private final AppUserRepository userRepository;

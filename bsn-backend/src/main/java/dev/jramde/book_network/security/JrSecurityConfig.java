@@ -9,9 +9,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -31,13 +29,14 @@ public class JrSecurityConfig {
             "/webjars/**",
             "/swagger-ui.html"
     };
-    private final JrJwtAuthFilter jwtAuthFilter;
+   // private final JrJwtAuthFilter jwtAuthFilter;
 
     // Bean declared in BeanConfig class
-    private final AuthenticationProvider authenticationProvider;
+    // private final AuthenticationProvider authenticationProvider;
 
     /**
      * Filter requests coming from client by using the internal corsFilter.
+     *
      * @param http : HttpSecurity
      * @return SecurityFilterChain
      * @throws Exception when error occurs.
@@ -52,10 +51,13 @@ public class JrSecurityConfig {
                             .anyRequest()
                             .authenticated();
                 })
-                .sessionManagement((session) ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(this.authenticationProvider)
-                .addFilterBefore(this.jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .oauth2ResourceServer(auth -> auth.jwt(token -> token.jwtAuthenticationConverter(
+                        new JrKeycloakJwtAuthenticationConverter()
+                )));
+//                .sessionManagement((session) ->
+//                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .authenticationProvider(this.authenticationProvider)
+//                .addFilterBefore(this.jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }

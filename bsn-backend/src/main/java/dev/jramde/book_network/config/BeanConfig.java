@@ -5,13 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.http.HttpHeaders;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -25,7 +18,7 @@ import java.util.Collections;
 public class BeanConfig {
 
     // From security.core.userdetails
-    private final UserDetailsService userDetailsService;
+    /*private final UserDetailsService userDetailsService;
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
@@ -40,17 +33,17 @@ public class BeanConfig {
         return new BCryptPasswordEncoder();
     }
 
-    /**
+    *//**
      * AuthenticationManager is used to processes an Authentication request.
      *
      * @param authConfig : Configuration for authentication.
      * @return AuthenticationManager
      * @throws Exception : If the authentication manager cannot be created.
-     */
+     *//*
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
-    }
+    }*/
 
     /**
      * Cors definition which will filter requests coming from Angular client.

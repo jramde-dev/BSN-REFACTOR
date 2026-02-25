@@ -25,7 +25,7 @@ import java.util.function.Function;
  * <p>- validate the token</p>,
  * <p>- decode the token and extract information from the token</p>
  */
-@Service
+// @Service
 public class JrJwtService {
 
     @Value("${application.security.jwt.expiration}")
