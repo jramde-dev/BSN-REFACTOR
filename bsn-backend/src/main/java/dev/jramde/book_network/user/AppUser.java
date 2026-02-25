@@ -41,9 +41,9 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "users")
-@EntityListeners(AuditingEntityListener.class)
+// @Entity
+// @Table(name = "users")
+// @EntityListeners(AuditingEntityListener.class)
 public class AppUser implements UserDetails, Principal {
     @Id
     @GeneratedValue

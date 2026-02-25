@@ -2,7 +2,7 @@ package dev.jramde.book_network.history;
 
 import dev.jramde.book_network.book.Book;
 import dev.jramde.book_network.common.AbstractBaseEntity;
-import dev.jramde.book_network.user.AppUser;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -30,9 +30,11 @@ public class BookTransactionHistory extends AbstractBaseEntity {
     /**
      * The borrower.
      */
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private AppUser user;
+    // @ManyToOne
+    // @JoinColumn(name = "user_id")
+    // private AppUser user;
+    @Column(name = "borrower_id")
+    private String borrowerId;
 
     private boolean returned;
     private boolean returnApproved;

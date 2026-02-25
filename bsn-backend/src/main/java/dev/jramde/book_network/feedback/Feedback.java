@@ -37,7 +37,7 @@ public class Feedback extends AbstractBaseEntity {
     @JoinColumn(name = "book_id")
     private Book book;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private AppUser user;
+    // @ManyToOne
+    // @JoinColumn(name = "user_id")
+    // private AppUser user;
 }

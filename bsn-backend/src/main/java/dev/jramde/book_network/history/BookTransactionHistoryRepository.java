@@ -17,10 +17,11 @@ public interface BookTransactionHistoryRepository extends JpaRepository<BookTran
      * @return all the books.
      */
     @Query("""
-            SELECT history FROM BookTransactionHistory history
-            WHERE history.user.id = :userId
+            SELECT history
+            FROM BookTransactionHistory history
+            WHERE history.borrowerId = :userId
             """)
-    Page<BookTransactionHistory> findAllBorrowedBooks(Pageable pageable, Integer userId);
+    Page<BookTransactionHistory> findAllBorrowedBooks(Pageable pageable, String userId);
 
     /**
      * Find all books which were borrowed and are returned.
@@ -29,32 +30,34 @@ public interface BookTransactionHistoryRepository extends JpaRepository<BookTran
      * @return all books
      */
     @Query("""
-            SELECT history FROM BookTransactionHistory history
-            WHERE history.book.owner.id = :ownerId
+            SELECT history
+            FROM BookTransactionHistory history
+            WHERE history.book.createdBy = :ownerId
             """)
-    Page<BookTransactionHistory> findAllReturnedBooks(Pageable pageable, Integer ownerId);
+    Page<BookTransactionHistory> findAllReturnedBooks(Pageable pageable, String ownerId);
 
     @Query("""
             SELECT (COUNT (*) > 0) AS isBorrowed
             FROM BookTransactionHistory transacHistory
-            WHERE transacHistory.user.id = :userId
+            WHERE transacHistory.borrowerId = :userId
             AND transacHistory.book.id = :bookId
             AND transacHistory.returnApproved = false
             """)
-    boolean isAlreadyBorrowedByUser(@Param("bookId") Integer bookId, @Param("userId") Integer userId);
+    boolean isAlreadyBorrowedByUser(@Param("bookId") Integer bookId, @Param("userId") String userId);
 
     @Query("""
             SELECT transacHistory
             FROM BookTransactionHistory transacHistory
-            WHERE transacHistory.user.id = :userId
+            WHERE transacHistory.borrowerId = :userId
             AND transacHistory.book.id = :bookId
             AND transacHistory.returned = false
             AND transacHistory.returnApproved = false
             """)
-    Optional<BookTransactionHistory> findByBookIdAndUserId(Integer bookId, Integer userId);
+    Optional<BookTransactionHistory> findByBookIdAndUserId(Integer bookId, String userId);
 
     /**
      * Find a returned book which is not approved yet.
+     * createdBy will now map the keycloak user id.
      * @param bookId : returned book to approve
      * @param ownerId : owner of the book
      * @return the book
@@ -62,10 +65,10 @@ public interface BookTransactionHistoryRepository extends JpaRepository<BookTran
     @Query("""
             SELECT transacHistory
             FROM BookTransactionHistory transacHistory
-            WHERE transacHistory.book.owner.id = :ownerId
+            WHERE transacHistory.book.createdBy = :ownerId
             AND transacHistory.book.id = :bookId
             AND transacHistory.returned = true
             AND transacHistory.returnApproved = false
             """)
-    Optional<BookTransactionHistory> findByBookIdAndOwnerId(Integer bookId, Integer ownerId);
+    Optional<BookTransactionHistory> findByBookIdAndOwnerId(Integer bookId, String ownerId);
 }

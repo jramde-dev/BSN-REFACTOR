@@ -20,15 +20,15 @@ import org.springframework.web.bind.annotation.RestController;
 // From swagger
 @Tag(name = "Authentication", description = "Authentication endpoints")
 public class AuthenticationController {
-    private final AuthenticationService authService;
+    /*private final AuthenticationService authService;
 
-    /**
+    *//**
      * Create new account and send activation email.
      *
      * @param registrationRequest : registration request
      * @return accepted response
      * @throws MessagingException if email cannot be sent
-     */
+     *//*
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PostMapping("/register")
     public ResponseEntity<Void> register(
@@ -37,11 +37,11 @@ public class AuthenticationController {
         return ResponseEntity.accepted().build();
     }
 
-    /**
+    *//**
      * Authenticate a user.
      * @param authRequest : authentication request
      * @return authentication token
-     */
+     *//*
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody @Valid AuthenticationRequest authRequest) {
@@ -52,5 +52,5 @@ public class AuthenticationController {
     public ResponseEntity<Void> activateAccount(@RequestParam String token) throws MessagingException {
         authService.activateAccount(token);
         return ResponseEntity.ok().build();
-    }
+    }*/
 }

@@ -6,6 +6,7 @@ import {ActivateAccountComponent} from "./auth-pages/activate-account/activate-a
 import {authGuard} from "./core/guard/auth.guard";
 
 const routes: Routes = [
+  {path: "", redirectTo: "books", pathMatch: "full"},
   {path: 'login', title: 'Login', component: LoginComponent},
   {path: 'register', title: 'Register', component: RegisterComponent},
   {path: 'activate-account', title: 'Activate Account', component: ActivateAccountComponent},
@@ -16,7 +17,6 @@ const routes: Routes = [
     loadChildren: () => import("./modules/book/book.module").then(m => m.BookModule),
     canActivate: [authGuard]
   },
-  {path: "", redirectTo: "login", pathMatch: "full"},
   {path: "**", redirectTo: "books", pathMatch: "full"}
 ];
 

@@ -38,11 +38,14 @@ public class AbstractBaseEntity {
     @Column(insertable = false)
     private LocalDateTime lastModifiedDate;
 
+    /**
+     * createdBy and lastModifiedBy become the keycloak connected user id.
+     */
     @CreatedBy
     @Column(nullable = false, updatable = false)
-    private Integer createdBy;
+    private String createdBy;
 
     @LastModifiedBy
     @Column(insertable = false)
-    private Integer lastModifiedBy;
+    private String lastModifiedBy;
 }

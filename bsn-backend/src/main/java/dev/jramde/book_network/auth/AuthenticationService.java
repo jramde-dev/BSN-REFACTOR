@@ -28,7 +28,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-    // Interface used to encode and verify password.
+   /* // Interface used to encode and verify password.
     // Must be declared as bean in the project (BeanConfig).
     private final PasswordEncoder passwordEncoder;
 
@@ -44,11 +44,11 @@ public class AuthenticationService {
     @Value("${application.mailing.frontend.activation-url}")
     private String activationUrl;
 
-    /**
+    *//**
      * Register a new user.
      *
      * @param registrationRequest : registration request
-     */
+     *//*
     public void register(RegistrationRequest registrationRequest) throws MessagingException {
         // 1. Retrieve the default user role
         // todo - make better exception handling
@@ -73,11 +73,11 @@ public class AuthenticationService {
         sendValidationEmail(user);
     }
 
-    /**
+    *//**
      * Email the user to validate their account.
      *
      * @param user : user
-     */
+     *//*
     private void sendValidationEmail(AppUser user) throws MessagingException {
         String newToken = generateAndSaveActivationToken(user);
         // Send email
@@ -91,12 +91,12 @@ public class AuthenticationService {
         );
     }
 
-    /**
+    *//**
      * Generate an activation code and save it to the database.
      *
      * @param user : user for which the activation code will be generated
      * @return activation code
-     */
+     *//*
     private String generateAndSaveActivationToken(AppUser user) {
         String generatedToken = generateActivationCode(6);
         Token token = Token.builder()
@@ -109,12 +109,12 @@ public class AuthenticationService {
         return generatedToken;
     }
 
-    /**
+    *//**
      * Auto generate an activation code using SecureRandom generator.
      *
      * @param length : the length of the code
      * @return code in type of character
-     */
+     *//*
     private String generateActivationCode(int length) {
         String characters = "0123456789";
         StringBuilder codeBuilder = new StringBuilder();
@@ -129,12 +129,12 @@ public class AuthenticationService {
         return codeBuilder.toString();
     }
 
-    /**
+    *//**
      * Authenticate a user.
      *
      * @param authRequest : the authentication request
      * @return token
-     */
+     *//*
     public AuthenticationResponse authenticate(AuthenticationRequest authRequest) {
         // Return the authentication token if the authentication request matches the user credentials
         Authentication authenticationToken = this.authenticationManager.authenticate(
@@ -152,11 +152,11 @@ public class AuthenticationService {
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
 
-    /**
+    *//**
      * Activate a user account.
      *
      * @param token : the activation token
-     */
+     *//*
     public void activateAccount(String token) throws MessagingException {
         // TODO - make better exception handling
         Token userToken = tokenRepository.findByToken(token)
@@ -174,5 +174,5 @@ public class AuthenticationService {
 
         userToken.setValidatedAt(LocalDateTime.now());
         tokenRepository.save(userToken);
-    }
+    }*/
 }

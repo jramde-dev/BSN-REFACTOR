@@ -39,7 +39,7 @@ public class ModelMapper {
                 .author(book.getAuthor())
                 .isbn(book.getIsbn())
                 .synopsis(book.getSynopsis())
-                .owner(book.getOwner().getFullName())
+                //.owner(book.getOwner().getFullName())
                 .rate(book.getRate())
                 .shareable(book.isShareable())
                 .archived(book.isArchived())
@@ -69,7 +69,7 @@ public class ModelMapper {
                 .build();
     }
 
-    public FeedbackResponse maps(Feedback feedback, Integer userId) {
+    public FeedbackResponse maps(Feedback feedback, String userId) {
         return FeedbackResponse.builder()
                 .note(feedback.getNote())
                 .comment(feedback.getComment())

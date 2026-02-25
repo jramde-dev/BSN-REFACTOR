@@ -32,9 +32,9 @@ public class Book extends AbstractBaseEntity {
     private boolean archived;
     private boolean shareable;
 
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
-    private AppUser owner;
+    // @ManyToOne
+    // @JoinColumn(name = "owner_id")
+    // private AppUser owner;
 
     @OneToMany(mappedBy = "book")
     private List<Feedback> feedbacks;

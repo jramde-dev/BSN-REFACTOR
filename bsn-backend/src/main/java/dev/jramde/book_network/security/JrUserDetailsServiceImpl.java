@@ -13,20 +13,21 @@ import org.springframework.stereotype.Service;
  */
 // @Service
 @RequiredArgsConstructor
-public class JrUserDetailsServiceImpl implements UserDetailsService {
+public class JrUserDetailsServiceImpl {
+    /* implements UserDetailsService {
     private final AppUserRepository userRepository;
 
-    /**
+    *//**
      * Load user from the database via transactional.
      *
      * @param userEmail : user email
      * @return user details
      * @throws UsernameNotFoundException : when user not found
-     */
+     *//*
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
         return userRepository.findByEmail(userEmail).orElseThrow(
                 () -> new UsernameNotFoundException("User not found with username: " + userEmail));
-    }
+    }*/
 }

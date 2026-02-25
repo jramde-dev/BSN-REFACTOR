@@ -10,6 +10,7 @@ public interface BookRepository extends JpaRepository<Book, Integer>, JpaSpecifi
 
     /**
      * Return all public book not belong to the current user.
+     * The createdBy will be set only when the connected user will perform the creation of a book.
      * @param pageable : the pagination
      * @param userId : current user
      * @return Books
@@ -18,7 +19,7 @@ public interface BookRepository extends JpaRepository<Book, Integer>, JpaSpecifi
             SELECT book FROM Book book
             WHERE book.archived = false
             AND book.shareable = true
-            AND book.owner.id != :userId
+            AND book.createdBy != :userId
             """)
     Page<Book> findAllSharedBooksExceptThoseBelongToTheCurrentUser(Pageable pageable, Integer userId);
 }
