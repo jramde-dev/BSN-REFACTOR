@@ -1,23 +1,30 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthenticationRequest} from "../../services/models/authentication-request";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../services/services/authentication.service";
 import {TokenService} from "../../core/token/token.service";
+import {KeycloakService} from "../../services/keycloak/keycloak.service";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   authRequest: AuthenticationRequest = {email: '', password: ''};
   errorMessage: Array<string> = [];
 
   constructor(
+    private kcService: KeycloakService,
     private router: Router,
     private authService: AuthenticationService,
     private tokenService: TokenService
   ) {
+  }
+
+  async ngOnInit(): Promise<void> {
+    await this.kcService.init();
+    await this.kcService.login();
   }
 
   onLogin() {

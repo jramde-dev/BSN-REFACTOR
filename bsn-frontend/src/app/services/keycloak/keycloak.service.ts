@@ -36,11 +36,11 @@ export class KeycloakService {
     }
   }
 
-  onLogin() {
+  login() {
     return this.keycloak?.login();
   }
 
-  onLogout() {
+  logout() {
     return this.keycloak?.logout({
       redirectUri: "http://localhost:4200"
     });
