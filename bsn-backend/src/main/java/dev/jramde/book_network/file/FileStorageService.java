@@ -27,7 +27,7 @@ public class FileStorageService {
      * @param userId     : the connected user
      * @return file url
      */
-    public String getCoverPath(@Nonnull MultipartFile sourceFile, @Nonnull Integer userId) {
+    public String getCoverPath(@Nonnull MultipartFile sourceFile, @Nonnull String userId) {
         // Upload path for each user
         final String fileUploadSubPath = "users" + File.separator + userId;
         return uploadFile(sourceFile, fileUploadSubPath);

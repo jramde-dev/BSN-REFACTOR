@@ -21,5 +21,5 @@ public interface BookRepository extends JpaRepository<Book, Integer>, JpaSpecifi
             AND book.shareable = true
             AND book.createdBy != :userId
             """)
-    Page<Book> findAllSharedBooksExceptThoseBelongToTheCurrentUser(Pageable pageable, Integer userId);
+    Page<Book> findAllSharedBooksExceptThoseBelongToTheCurrentUser(Pageable pageable, String userId);
 }

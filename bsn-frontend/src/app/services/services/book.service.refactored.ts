@@ -42,11 +42,11 @@ export class BookServiceRefactored {
   }
 
   returnBorrowedBook(bookId: number): Observable<ApiResponse<number>> {
-    return this.http.post<ApiResponse<number>>(`${this.baseUrl}/books/borrow/return/${bookId}`, {});
+    return this.http.patch<ApiResponse<number>>(`${this.baseUrl}/books/borrow/return/${bookId}`, {});
   }
 
   approveReturnedBook(bookId: number): Observable<ApiResponse<number>> {
-    return this.http.post<ApiResponse<number>>(`${this.baseUrl}/books/borrow/return/approve/${bookId}`, {});
+    return this.http.patch<ApiResponse<number>>(`${this.baseUrl}/books/borrow/return/approve/${bookId}`, {});
   }
 
   changeShareableStatus(bookId: number): Observable<ApiResponse<number>> {

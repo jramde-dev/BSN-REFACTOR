@@ -57,10 +57,10 @@ public class BookService {
      * @return the page of books
      */
     public PageResponse<BookResponse> findAll(int page, int size, Authentication connectedUser) {
-        AppUser currentUser = (AppUser) connectedUser.getPrincipal();
+        // AppUser currentUser = (AppUser) connectedUser.getPrincipal();
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
         Page<Book> books = bookRepository.findAllSharedBooksExceptThoseBelongToTheCurrentUser(
-                pageable, currentUser.getId());
+                pageable, connectedUser.getName());
         List<BookResponse> bookResponses = books.stream().map(mapper::maps).toList();
 
         return new PageResponse<>(
@@ -83,9 +83,9 @@ public class BookService {
      * @return listing books
      */
     public PageResponse<BookResponse> findAllByOwner(int page, int size, Authentication connectedUser) {
-        AppUser currentUser = (AppUser) connectedUser.getPrincipal();
+        // AppUser currentUser = (AppUser) connectedUser.getPrincipal();
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
-        Page<Book> books = bookRepository.findAll(BookSpecification.withOwner(currentUser.getId()), pageable);
+        Page<Book> books = bookRepository.findAll(BookSpecification.withOwner(connectedUser.getName()), pageable);
         List<BookResponse> bookResponses = books.stream().map(mapper::maps).toList();
 
         return new PageResponse<>(
@@ -282,10 +282,10 @@ public class BookService {
      */
     public void uploadCoverPicture(Authentication connectedUser, Integer bookId, MultipartFile file) {
         Book book = bookRepository.findById(bookId).orElseThrow(() -> new EntityNotFoundException("Book not found"));
-        AppUser currentUser = (AppUser) connectedUser.getPrincipal();
+        // AppUser currentUser = (AppUser) connectedUser.getPrincipal();
 
         // Will also store
-        String bookCoverFilePath = fileStorageService.getCoverPath(file, currentUser.getId());
+        String bookCoverFilePath = fileStorageService.getCoverPath(file, connectedUser.getName());
         book.setBookCover(bookCoverFilePath);
         bookRepository.save(book);
     }
