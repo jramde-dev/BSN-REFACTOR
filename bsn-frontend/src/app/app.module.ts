@@ -38,6 +38,8 @@ import {KeycloakService} from "./services/keycloak/keycloak.service";
       useClass: HttpTokenInterceptor,
       multi: true
     },
+
+    // Add Keycloak provider
     {
       provide: APP_INITIALIZER,
       deps: [KeycloakService],

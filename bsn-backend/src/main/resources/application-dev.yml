@@ -45,3 +45,7 @@ application:
 
 # Swagger local url
 # http://localhost:8080/api/v1/swagger-ui/index.html
+
+# Keycloak admin user:
+# ramdejuldas or ramdejuldas129@gmail.com
+# password

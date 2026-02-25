@@ -63,5 +63,5 @@ $ npm install @auth0/angular-jwt
 ### 2. Create a client
 
 ### Configure Keycloak in Angular
-- Install keycloak-js :
-  $ npm i keycloak-js@24.0.2
+- Install keycloak-js : $ npm i keycloak-js@24.0.2
+- Pick the same version used for the Keycloak server
