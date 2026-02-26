@@ -37,7 +37,9 @@ export class KeycloakService {
   }
 
   login() {
-    return this.keycloak?.login();
+    return this.keycloak?.login({
+      redirectUri: "http://localhost:4200/books"
+    });
   }
 
   logout() {

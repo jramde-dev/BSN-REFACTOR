@@ -7,8 +7,8 @@ import {authGuard} from "./core/guard/auth.guard";
 
 const routes: Routes = [
   {path: "", redirectTo: "books", pathMatch: "full"},
-  {path: 'login', title: 'Login', component: LoginComponent},
-  {path: 'register', title: 'Register', component: RegisterComponent},
+  //{path: 'login', title: 'Login', component: LoginComponent},
+  //{path: 'register', title: 'Register', component: RegisterComponent},
   {path: 'activate-account', title: 'Activate Account', component: ActivateAccountComponent},
 
   // Mise en place du lazy loading avec les modules.

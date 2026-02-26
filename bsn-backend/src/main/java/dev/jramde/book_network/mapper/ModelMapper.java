@@ -40,6 +40,7 @@ public class ModelMapper {
                 .isbn(book.getIsbn())
                 .synopsis(book.getSynopsis())
                 //.owner(book.getOwner().getFullName())
+                .owner(book.getCreatedBy())
                 .rate(book.getRate())
                 .shareable(book.isShareable())
                 .archived(book.isArchived())
