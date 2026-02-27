@@ -23,6 +23,7 @@ services:
       - spring-demo
 
   # Keycloak config
+  # See realm config JSON: http://localhost:9090/realms/book-social-network/.well-known/openid-configuration
   keycloak:
     container_name: bsn-keycloak
     image: quay.io/keycloak/keycloak:24.0.2
