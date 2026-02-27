@@ -1,6 +1,8 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 
+@import "../node_modules/ngx-toastr/toastr.css";
+
 .login-container {
   width: 90%;
   margin-top: 15%;

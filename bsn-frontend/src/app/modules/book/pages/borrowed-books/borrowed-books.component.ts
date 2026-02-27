@@ -6,6 +6,7 @@ import {FeedbackRequest} from "../../../../services/models/feedback-request";
 import {FeedbackService} from "../../../../services/services/feedback.service";
 import {BookServiceRefactored} from "../../../../services/services/book.service.refactored";
 import {PaginationResponse} from "../../../../services/models/api-response";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-borrowed-books',
@@ -22,6 +23,7 @@ export class BorrowedBooksComponent implements OnInit {
   constructor(
     // private bookService: BookService,
     private bookService: BookServiceRefactored,
+    private toastrService: ToastrService,
     private feedbackService: FeedbackService) {
   }
 
@@ -62,7 +64,7 @@ export class BorrowedBooksComponent implements OnInit {
       body: this.feedbackRequest
     }).subscribe({
       next: () => {
-        // We'll come later
+        this.toastrService.success("Your feedback has bee submitted!", "Success")
       }
     });
   }

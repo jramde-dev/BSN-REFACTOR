@@ -4,6 +4,7 @@ import {BookService} from "../../../../services/services/book.service";
 import {BorrowedBookResponse} from "../../../../services/models/borrowed-book-response";
 import {PaginationResponse} from "../../../../services/models/api-response";
 import {BookServiceRefactored} from "../../../../services/services/book.service.refactored";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-returned-books',
@@ -20,6 +21,7 @@ export class ReturnedBooksComponent implements OnInit {
   constructor(
     // private bookService: BookService,
     private bookService: BookServiceRefactored,
+    private toastrService: ToastrService,
   ) {
   }
 
@@ -37,15 +39,17 @@ export class ReturnedBooksComponent implements OnInit {
 
   onApproveReturnedBook(book: BorrowedBookResponse) {
     if (!book.returned) {
-      this.level = "error";
-      this.message = "The book is not yet returned.";
+      // this.level = "error";
+      // this.message = "";
+      this.toastrService.info("The book is not yet returned.", "Info")
       return;
     }
 
     this.bookService.approveReturnedBook(book.id as number).subscribe({
       next: () => {
-        this.level = "success";
-        this.message = "Returned book approved !";
+        // this.level = "success";
+        // this.message = "Returned book approved !";
+        this.toastrService.info("Returned book approved !", "Success")
         this.findAllReturnedBooks();
       }
     });

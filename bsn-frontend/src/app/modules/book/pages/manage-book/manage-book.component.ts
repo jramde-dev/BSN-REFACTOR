@@ -2,6 +2,7 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {BookRequest} from "../../../../services/models/book-request";
 import {ActivatedRoute, Router} from "@angular/router";
 import {BookServiceRefactored} from "../../../../services/services/book.service.refactored";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-manage-book',
@@ -18,6 +19,7 @@ export class ManageBookComponent implements OnInit {
   constructor(
     //private bookService: BookService,
     private bookService: BookServiceRefactored,
+    private toastrService: ToastrService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef) {
@@ -67,18 +69,18 @@ export class ManageBookComponent implements OnInit {
         if (this.selectedBookCover) {
           this.bookService.uploadCoverPicture(bookId as number, this.selectedBookCover).subscribe({
             next: () => {
+              this.toastrService.success("Book saved successfully", "success")
               this.router.navigate(['/books/my-books']);
             },
             error: (error) => {
               console.log('Cover upload error:', error);
-              this.errorMsg = error.error?.businessValidationErrors || ['Failed to upload cover picture'];
+              this.toastrService.error(error.error?.businessValidationErrors, "Error")
             }
           })
         }
       },
       error: (error) => {
-        console.log(error);
-        this.errorMsg = error.error.businessValidationErrors;
+        this.toastrService.error(error.error.businessValidationErrors, "Error")
       }
     })
   }

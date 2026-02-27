@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {BookResponse} from "../../../../services/models/book-response";
 import {PaginationResponse} from "../../../../services/models/api-response";
 import {BookServiceRefactored} from "../../../../services/services/book.service.refactored";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-my-books',
@@ -17,6 +18,7 @@ export class MyBooksComponent implements OnInit {
   constructor(
     // private bookService: BookService,
     private bookService: BookServiceRefactored,
+    private toastrService: ToastrService,
     private router: Router) {
   }
 
@@ -72,6 +74,7 @@ export class MyBooksComponent implements OnInit {
     this.bookService.changeArchiveStatus(book.id as number).subscribe({
       next: () => {
         book.archived = !book.archived;
+        this.toastrService.success("Book archived successfully", "Success")
       }
     });
   }
@@ -84,6 +87,7 @@ export class MyBooksComponent implements OnInit {
     this.bookService.changeShareableStatus(book.id as number).subscribe({
       next: () => {
         book.shareable = !book.shareable;
+        this.toastrService.success("Book shared successfully", "Success")
       }
     });
   }

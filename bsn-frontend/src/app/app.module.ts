@@ -11,10 +11,7 @@ import { ActivateAccountComponent } from './auth-pages/activate-account/activate
 import {CodeInputModule} from "angular-code-input";
 import {HttpTokenInterceptor} from "./core/interceptor/http-token.interceptor";
 import {KeycloakService} from "./services/keycloak/keycloak.service";
-
-// export function kcFactory(keycloak: KeycloakService) {
-//   return () => keycloak.init();
-// }
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -28,7 +25,15 @@ import {KeycloakService} from "./services/keycloak/keycloak.service";
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    CodeInputModule
+    CodeInputModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+      timeOut: 5000,
+      progressBar: true,
+      newestOnTop: true,
+      tapToDismiss: true,
+    }),
   ],
   providers: [
     HttpClient,

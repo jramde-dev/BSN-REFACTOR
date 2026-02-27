@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {BookResponse} from "../../../../services/models/book-response";
 import {BookServiceRefactored} from "../../../../services/services/book.service.refactored";
 import {PaginationResponse} from "../../../../services/models/api-response";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-book-list',
@@ -19,6 +20,7 @@ export class BookListComponent implements OnInit {
   constructor(
     // private bookService: BookService,
     private bookService: BookServiceRefactored,
+    private toastrService: ToastrService,
     private router: Router) {
   }
 
@@ -72,12 +74,12 @@ export class BookListComponent implements OnInit {
     this.bookService.borrowBook(book.id as number).subscribe({
       next: () => {
         this.level = "success";
-        this.message = "Book successfully added to your list."
+        this.toastrService.success("Book successfully added to your list.", "Success")
       },
       error: (err) => {
         console.log(err);
         this.level = "error";
-        this.message = err.error.businessErrorMessage;
+        this.toastrService.error(err.error.businessErrorMessage, "Error");
       }
     })
   }
