@@ -3,7 +3,6 @@ package dev.jramde.book_network.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,9 +26,10 @@ public class JrSecurityConfig {
             "/configuration/security",
             "/swagger-ui/**",
             "/webjars/**",
-            "/swagger-ui.html"
+            "/swagger-ui.html",
+            "/ws/**"
     };
-   // private final JrJwtAuthFilter jwtAuthFilter;
+    // private final JrJwtAuthFilter jwtAuthFilter;
 
     // Bean declared in BeanConfig class
     // private final AuthenticationProvider authenticationProvider;
