@@ -6,7 +6,9 @@ import dev.jramde.book_network.file.FileStorageService;
 import dev.jramde.book_network.history.BookTransactionHistory;
 import dev.jramde.book_network.history.BookTransactionHistoryRepository;
 import dev.jramde.book_network.mapper.ModelMapper;
-import dev.jramde.book_network.user.AppUser;
+import dev.jramde.book_network.notification.ENotificationStatus;
+import dev.jramde.book_network.notification.Notification;
+import dev.jramde.book_network.notification.NotificationService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,6 +29,7 @@ public class BookService {
     private final BookRepository bookRepository;
     private final ModelMapper mapper;
     private final FileStorageService fileStorageService;
+    private final NotificationService notificationService;
 
     /**
      * Create a new book.
@@ -218,6 +221,14 @@ public class BookService {
                 .returned(false)
                 .returnApproved(false)
                 .build();
+        notificationService.sendNotification(
+                book.getCreatedBy(),
+                Notification.builder()
+                        .status(ENotificationStatus.BORROWED)
+                        .message("Your book has been borrowed.")
+                        .bookTile(book.getTitle())
+                        .build()
+        );
         return bookTransactionHistoryRepository.save(bookTransactionHistory).getId();
     }
 
@@ -243,7 +254,16 @@ public class BookService {
                 .findByBookIdAndUserId(bookId, connectedUser.getName())
                 .orElseThrow(() -> new OperationNotPermittedException("You did not borrow this book."));
         bookTransactionHistory.setReturned(true);
-        return bookTransactionHistoryRepository.save(bookTransactionHistory).getId();
+        var savedBook = bookTransactionHistoryRepository.save(bookTransactionHistory);
+        notificationService.sendNotification(
+                book.getCreatedBy(),
+                Notification.builder()
+                        .status(ENotificationStatus.RETURNED)
+                        .message("Your book has been returned.")
+                        .bookTile(book.getTitle())
+                        .build()
+        );
+        return savedBook.getId();
     }
 
     /**
@@ -269,7 +289,16 @@ public class BookService {
                 .findByBookIdAndOwnerId(bookId, connectedUser.getName())
                 .orElseThrow(() -> new OperationNotPermittedException("This book is not returned."));
         bookTransactionHistory.setReturnApproved(true);
-        return bookTransactionHistoryRepository.save(bookTransactionHistory).getId();
+        var savedReturnedBook = bookTransactionHistoryRepository.save(bookTransactionHistory);
+        notificationService.sendNotification(
+                bookTransactionHistory.getCreatedBy(),
+                Notification.builder()
+                        .status(ENotificationStatus.RETURN_APPROVED)
+                        .message("Your book returned has been approved.")
+                        .bookTile(book.getTitle())
+                        .build()
+        );
+        return savedReturnedBook.getId();
     }
 
 
