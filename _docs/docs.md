@@ -65,3 +65,23 @@ $ npm install @auth0/angular-jwt
 ### Configure Keycloak in Angular
 - Install keycloak-js : $ npm i keycloak-js@24.0.2
 - Pick the same version used for the Keycloak server
+
+### WebSocket
+### 1. Prepare the backend 
+- Add dependencies in the pom.xml
+```xml
+
+<dependency>
+ <groupId>org.springframework.boot</groupId>
+ <artifactId>spring-boot-starter-websocket</artifactId>
+</dependency>
+<dependency>
+<groupId>org.springframework.security</groupId>
+<artifactId>spring-security-messaging</artifactId>
+</dependency>
+```
+
+- Install sockjs-client : $ npm i sockjs-client@1.6.1
+- Install stompjs : $ npm i stompjs@2.3.3
+- Install quill : $ npm i quill@2.0.2 to display editor
+- Install net : $ npm i net@1.0.2 to connect to the backend
