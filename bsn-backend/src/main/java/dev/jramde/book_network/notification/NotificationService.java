@@ -14,6 +14,6 @@ public class NotificationService {
 
     public void sendNotification(String userId, Notification notification) {
         log.info("Sending WS notification to {} with payload {}", userId, notification);
-        messagingTemplate.convertAndSendToUser(userId, "/notification", notification);
+        messagingTemplate.convertAndSendToUser(userId, "/notifications", notification);
     }
 }

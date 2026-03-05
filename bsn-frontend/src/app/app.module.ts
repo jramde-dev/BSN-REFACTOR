@@ -12,6 +12,7 @@ import {CodeInputModule} from "angular-code-input";
 import {HttpTokenInterceptor} from "./core/interceptor/http-token.interceptor";
 import {KeycloakService} from "./services/keycloak/keycloak.service";
 import { ToastrModule } from 'ngx-toastr';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ToastrModule } from 'ngx-toastr';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
