@@ -226,7 +226,7 @@ public class BookService {
                 Notification.builder()
                         .status(ENotificationStatus.BORROWED)
                         .message("Your book has been borrowed.")
-                        .bookTile(book.getTitle())
+                        .bookTitle(book.getTitle())
                         .build()
         );
         return bookTransactionHistoryRepository.save(bookTransactionHistory).getId();
@@ -260,7 +260,7 @@ public class BookService {
                 Notification.builder()
                         .status(ENotificationStatus.RETURNED)
                         .message("Your book has been returned.")
-                        .bookTile(book.getTitle())
+                        .bookTitle(book.getTitle())
                         .build()
         );
         return savedBook.getId();
@@ -295,7 +295,7 @@ public class BookService {
                 Notification.builder()
                         .status(ENotificationStatus.RETURN_APPROVED)
                         .message("Your book returned has been approved.")
-                        .bookTile(book.getTitle())
+                        .bookTitle(book.getTitle())
                         .build()
         );
         return savedReturnedBook.getId();

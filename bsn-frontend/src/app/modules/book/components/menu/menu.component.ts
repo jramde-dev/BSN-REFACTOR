@@ -13,6 +13,8 @@ import {ToastrService} from "ngx-toastr";
 export class MenuComponent implements OnInit {
   socketClient: any = null;
   private notifSubscription: any;
+  unreadNotifCount: number = 0;
+  notifications: Array<INotification> = [];
 
   constructor(private kcService: KeycloakService, private toastrService: ToastrService) {
   }
@@ -30,12 +32,16 @@ export class MenuComponent implements OnInit {
             `/user/${this.kcService.keycloak.tokenParsed?.sub}/notifications`,
             (message: any) => {
               const notification: INotification = JSON.parse(message.body);
-              if (notification.status === 'BORROWED') {
-                this.toastrService.info(notification.message, notification.bookTitle);
-              } else if (notification.status === 'RETURNED') {
-                this.toastrService.info(notification.message, notification.bookTitle);
-              } else if (notification.status === 'RETURN_APPROVED') {
-                this.toastrService.info(notification.message, notification.bookTitle);
+              if (notification) {
+                this.notifications.unshift(notification);
+                if (notification.status === 'BORROWED') {
+                  this.toastrService.info(notification.message, notification.bookTitle);
+                } else if (notification.status === 'RETURNED') {
+                  this.toastrService.info(notification.message, notification.bookTitle);
+                } else if (notification.status === 'RETURN_APPROVED') {
+                  this.toastrService.info(notification.message, notification.bookTitle);
+                }
+                this.unreadNotifCount++;
               }
             }
           )
@@ -60,5 +66,10 @@ export class MenuComponent implements OnInit {
 
   async onLogout() {
     this.kcService.logout();
+  }
+
+  get username() {
+    // @ts-ignore
+    return this.kcService.keycloak?.tokenParsed?.given_name;
   }
 }

@@ -16,5 +16,5 @@ import lombok.ToString;
 public class Notification {
     private ENotificationStatus status;
     private String message;
-    private String bookTile;
+    private String bookTitle;
 }
